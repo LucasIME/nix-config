@@ -118,20 +118,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  #general
+  discord
+  dislocker
+
+  #dev
+  vscode
   ghostty
-  vim
-  tree
   neovim
   tmux
-  discord
-  ripgrep
   git
-  dislocker
+  tree
+  ripgrep
   htop
   fzf
   stow
   oh-my-zsh
   opencode
+  nodejs
+  gcc
+  tree-sitter
+  jdk25
+  rustup
+  python3
+  unzip
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
