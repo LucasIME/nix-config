@@ -14,7 +14,7 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       lanzaboote.nixosModules.lanzaboote
-
+      ./modules/storage.nix
     ];
 
   # Bootloader.
@@ -41,6 +41,9 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openconnect
+  ];
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -133,6 +136,20 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  services.tailscale = {
+    enable = true;
+  };
+
+  programs.dconf.profiles.user.databases = [
+    {
+      settings = {
+        "org/gnome/shell/keybindings" = {
+          show-screenshot-ui = [ "<Super><Shift>s" ];
+        };
+      };
+    }
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -141,6 +158,12 @@ in
   dislocker
   dropbox
   obsidian
+  openconnect
+  freerdp
+  networkmanager-openconnect
+  qbittorrent
+  vlc
+  gnome-screenshot
 
   #secure boot
   pkgs.sbctl
