@@ -39,8 +39,10 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd"; # necessary so exposing Samba drive doesn't kill connection when TDLS is triggered
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openconnect
   ];
@@ -192,6 +194,7 @@ in
   python3
   unzip
   claude-code
+  tcpdump
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
