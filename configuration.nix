@@ -167,7 +167,7 @@ in
   gnome-screenshot
 
   #secure boot
-  pkgs.sbctl
+  sbctl
   niv
   lon
 
@@ -191,6 +191,7 @@ in
   rustup
   python3
   unzip
+  claude-code
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
