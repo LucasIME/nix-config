@@ -3,17 +3,11 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
-let
-  sources = import ./lon.nix;
-  lanzaboote = import sources.lanzaboote {
-    inherit pkgs;
-  };
-in
+
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      lanzaboote.nixosModules.lanzaboote
       ./modules/storage.nix
     ];
 
@@ -138,6 +132,9 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable flakes and the new nix CLI
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   services.tailscale = {
     enable = true;
   };
@@ -170,8 +167,6 @@ in
 
   #secure boot
   sbctl
-  niv
-  lon
 
   #dev
   vscode
