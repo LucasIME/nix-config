@@ -171,6 +171,7 @@
   qbittorrent
   vlc
   gnome-screenshot
+  proton-vpn
 
   #secure boot
   sbctl
