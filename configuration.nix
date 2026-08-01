@@ -146,6 +146,13 @@
         "org/gnome/shell/keybindings" = {
           show-screenshot-ui = [ "<Super><Shift>s" ];
         };
+        "org/gnome/desktop/peripherals/keyboard" = {
+          repeat = true;
+          # ms before a held key starts repeating (default 500)
+          delay = lib.gvariant.mkUint32 200;
+          # ms between repeats; lower = faster (default 30)
+          repeat-interval = lib.gvariant.mkUint32 15;
+        };
       };
     }
   ];
