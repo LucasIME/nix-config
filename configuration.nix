@@ -139,6 +139,19 @@
     enable = true;
   };
 
+  # Start Dropbox automatically on login (graphical session).
+  systemd.user.services.dropbox = {
+    description = "Dropbox";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.dropbox}/bin/dropbox";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
 
   programs.dconf.profiles.user.databases = [
     {
