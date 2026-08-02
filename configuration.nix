@@ -149,9 +149,14 @@
         "org/gnome/desktop/peripherals/keyboard" = {
           repeat = true;
           # ms before a held key starts repeating (default 500)
-          delay = lib.gvariant.mkUint32 200;
+          delay = lib.gvariant.mkUint32 250;
           # ms between repeats; lower = faster (default 30)
-          repeat-interval = lib.gvariant.mkUint32 15;
+          repeat-interval = lib.gvariant.mkUint32 20;
+        };
+        # Enable the AppIndicator tray so Dropbox (and similar apps)
+        # can show their status/logo icon in the top-right of the top bar.
+        "org/gnome/shell" = {
+          enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
         };
       };
     }
@@ -164,6 +169,7 @@
   discord
   dislocker
   dropbox
+  gnomeExtensions.appindicator
   obsidian
   openconnect
   freerdp
@@ -172,6 +178,7 @@
   vlc
   gnome-screenshot
   proton-vpn
+  protontricks
 
   #secure boot
   sbctl
