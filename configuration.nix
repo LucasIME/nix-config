@@ -59,6 +59,48 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
+  # Keyboard: keep the "US, intl., with dead keys" layout (so ' + e = é),
+  # but make it behave like Windows US-International — the acute dead key
+  # should only combine with vowels, not consonants. By default the Linux
+  # Compose table maps ' + s = ś, ' + m = ḿ, ' + c = ć, etc., which turns
+  # "I'm" into "Iḿ" and "let's" into "letś". We override just those
+  # consonant combos to emit a literal apostrophe followed by the letter.
+  environment.etc."xcompose/dead-acute-latin.compose".text = ''
+    # Start from the system default Compose table, then override below.
+    include "%L"
+
+    # Neutralise acute + consonant so ' passes through as an apostrophe.
+    <dead_acute> <c> : "ç"   ccedilla
+    <dead_acute> <C> : "Ç"   Ccedilla
+    <dead_acute> <g> : "'g"
+    <dead_acute> <G> : "'G"
+    <dead_acute> <j> : "'j"
+    <dead_acute> <J> : "'J"
+    <dead_acute> <k> : "'k"
+    <dead_acute> <K> : "'K"
+    <dead_acute> <l> : "'l"
+    <dead_acute> <L> : "'L"
+    <dead_acute> <m> : "'m"
+    <dead_acute> <M> : "'M"
+    <dead_acute> <n> : "'n"
+    <dead_acute> <N> : "'N"
+    <dead_acute> <p> : "'p"
+    <dead_acute> <P> : "'P"
+    <dead_acute> <r> : "'r"
+    <dead_acute> <R> : "'R"
+    <dead_acute> <s> : "'s"
+    <dead_acute> <S> : "'S"
+    <dead_acute> <v> : "'v"
+    <dead_acute> <V> : "'V"
+    <dead_acute> <w> : "'w"
+    <dead_acute> <W> : "'W"
+    <dead_acute> <z> : "'z"
+    <dead_acute> <Z> : "'Z"
+  '';
+
+  # Point the input method (IBus) and Xlib at the override table.
+  environment.sessionVariables.XCOMPOSEFILE = "/etc/xcompose/dead-acute-latin.compose";
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   
@@ -169,7 +211,24 @@
         # Enable the AppIndicator tray so Dropbox (and similar apps)
         # can show their status/logo icon in the top-right of the top bar.
         "org/gnome/shell" = {
-          enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
+          enabled-extensions = [
+            "appindicatorsupport@rgcjonas.gmail.com"
+            "dash-to-dock@micxgx.gmail.com"
+          ];
+        };
+        # Ubuntu-style dock: fixed on the left, always visible, showing
+        # open windows/apps.
+        "org/gnome/shell/extensions/dash-to-dock" = {
+          dock-position = "LEFT";
+          # Always show the dock instead of auto-hiding it.
+          dock-fixed = true;
+          intellihide = false;
+          autohide = false;
+          # Show a dot for each open window and the running apps.
+          show-running = true;
+          show-windows-preview = true;
+          # Behave like the top-of-screen activities: keep favorites too.
+          show-favorites = true;
         };
       };
     }
@@ -183,6 +242,7 @@
   dislocker
   dropbox
   gnomeExtensions.appindicator
+  gnomeExtensions.dash-to-dock
   obsidian
   openconnect
   freerdp
