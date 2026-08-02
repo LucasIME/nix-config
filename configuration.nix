@@ -214,21 +214,33 @@
           enabled-extensions = [
             "appindicatorsupport@rgcjonas.gmail.com"
             "dash-to-dock@micxgx.gmail.com"
+            "multi-monitors-bar@frederykabryan"
           ];
         };
-        # Ubuntu-style dock: fixed on the left, always visible, showing
+        # Left-side dock that auto-hides and reveals on hover, showing
         # open windows/apps.
         "org/gnome/shell/extensions/dash-to-dock" = {
           dock-position = "LEFT";
-          # Always show the dock instead of auto-hiding it.
-          dock-fixed = true;
+          # dock-fixed = true forces the dock to always stay visible and
+          # overrides autohide, so it must be false for auto-hiding to work.
+          dock-fixed = false;
           intellihide = false;
-          autohide = false;
+          autohide = true;
+          # Reveal the dock when the pointer hits the screen edge.
+          require-pressure-to-show = true;
           # Show a dot for each open window and the running apps.
           show-running = true;
           show-windows-preview = true;
           # Behave like the top-of-screen activities: keep favorites too.
           show-favorites = true;
+        };
+        # Add a top bar on the secondary monitor(s), including the clock.
+        "org/gnome/shell/extensions/multi-monitors-bar" = {
+          show-panel = true;
+          show-date-time = true;
+          show-activities = true;
+          show-app-menu = true;
+          show-indicator = true;
         };
       };
     }
@@ -243,6 +255,7 @@
   dropbox
   gnomeExtensions.appindicator
   gnomeExtensions.dash-to-dock
+  gnomeExtensions.multi-monitor-bar
   obsidian
   openconnect
   freerdp
