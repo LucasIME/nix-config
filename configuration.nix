@@ -201,6 +201,18 @@
         "org/gnome/shell/keybindings" = {
           show-screenshot-ui = [ "<Super><Shift>s" ];
         };
+        # Custom keybinding: Super+E opens the Files app (Nautilus),
+        # mirroring the Windows Explorer shortcut.
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          ];
+        };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          name = "Open Files";
+          command = "nautilus --new-window";
+          binding = "<Super>e";
+        };
         "org/gnome/desktop/peripherals/keyboard" = {
           repeat = true;
           # ms before a held key starts repeating (default 500)
