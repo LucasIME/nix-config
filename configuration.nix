@@ -159,7 +159,7 @@
   users.users."lmeireles" = {
     isNormalUser = true;
     description = "Lucas Meireles";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
     #  thunderbird
@@ -258,6 +258,8 @@
     }
   ];
 
+  virtualisation.docker.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -303,6 +305,7 @@
   unzip
   claude-code
   tcpdump
+  docker
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
